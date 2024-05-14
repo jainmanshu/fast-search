@@ -1,0 +1,6 @@
+name = "fast-search"
+compatibility_date = "2024-05-13"
+
+[vars]
+UPSTASH_REDIS_REST_URL = "..."
+UPSTASH_REDIS_REST_TOKEN = "..."
