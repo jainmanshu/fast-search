@@ -18,7 +18,7 @@ async function seedDatabase() {
     console.log(`Created "countries" table`);
 
     // Batch insert countries
-    const values = countryList.map((country) => [country]);
+    const values = countryList.map((country) => [country.toUpperCase()]);
     const queryText = `INSERT INTO countries (name) VALUES ${values
       .map((_, index) => `($${index + 1})`)
       .join(",")}`;

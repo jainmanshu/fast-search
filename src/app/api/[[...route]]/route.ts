@@ -20,7 +20,7 @@ app.get("/postgres", async (c) => {
     // ---------------------------
     const client = await db.connect();
 
-    const query = c.req.query("q");
+    const query = c.req.query("q")?.toUpperCase();
     if (!query) {
       return c.json({ message: "Invalid search query" }, { status: 400 });
     }
@@ -28,9 +28,9 @@ app.get("/postgres", async (c) => {
     const { rows: res } = await client.sql`
       SELECT name
       FROM countries
-      WHERE name ILIKE '%' || ${query} || '%'
+      WHERE name ILIKE ${query} || '%'
       ORDER BY ts_rank_cd(to_tsvector('simple', name), to_tsquery('simple', ${query})) DESC
-      LIMIT 10
+      LIMIT 5
       `;
 
     // --------------------------

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/command";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 type SearchEngines = "postgres" | "redis" | "elastic";
 
@@ -20,6 +21,10 @@ export default function Home() {
     results: string[];
     duration: number;
   }>();
+
+  const handleInput = useDebouncedCallback((value) => {
+    setInput(value);
+  }, 300);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,8 +52,7 @@ export default function Home() {
         <div className="max-w-md w-full">
           <Command>
             <CommandInput
-              value={input}
-              onValueChange={setInput}
+              onValueChange={handleInput}
               placeholder="Search countries..."
               className="placeholder:text-zinc-500"
             />
@@ -60,11 +64,7 @@ export default function Home() {
               {searchResults?.results ? (
                 <CommandGroup heading="Results">
                   {searchResults?.results.map((result) => (
-                    <CommandItem
-                      key={result}
-                      value={result}
-                      onSelect={setInput}
-                    >
+                    <CommandItem key={result} value={result}>
                       {result}
                     </CommandItem>
                   ))}
