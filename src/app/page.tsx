@@ -8,9 +8,13 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
+type SearchEngines = "postgres" | "redis";
+
 export default function Home() {
+  const [searchEngine, setSearchEngine] = useState<SearchEngines>("postgres");
   const [input, setInput] = useState<string>("");
   const [searchResults, setSearchResults] = useState<{
     results: string[];
@@ -67,7 +71,7 @@ export default function Home() {
                 </CommandGroup>
               ) : null}
 
-              {searchResults?.results ? (
+              {searchResults?.results?.length ? (
                 <>
                   <div className="h-px w-full bg-zinc-200" />
 
@@ -79,6 +83,30 @@ export default function Home() {
               ) : null}
             </CommandList>
           </Command>
+        </div>
+        <div className="text-zinc-600 text-lg max-w-prose text-center">
+          {" "}
+          Select your search engine to see the typeahead performance.{" "}
+        </div>
+        <div className="flex items-center gap-12">
+          <button className="flex flex-col items-center text-zinc-600">
+            <div className="w-12 h-12 relative">
+              <Image src="/postgres.svg" alt="Button 1" layout="fill" />
+            </div>
+            postgres
+          </button>
+          <button className="flex flex-col items-center text-zinc-600">
+            <div className="w-12 h-12 relative">
+              <Image src="/redis.svg" alt="redis" layout="fill" />
+            </div>
+            Redis
+          </button>
+          <button className="flex flex-col items-center text-zinc-600">
+            <div className="w-12 h-12 relative">
+              <Image src="/elastic.svg" alt="redis" layout="fill" />
+            </div>
+            Elasticsearch
+          </button>
         </div>
       </div>
     </main>
