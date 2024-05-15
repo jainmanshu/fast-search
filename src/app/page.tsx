@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-type SearchEngines = "postgres" | "redis";
+type SearchEngines = "postgres" | "redis" | "elastic";
 
 export default function Home() {
   const [searchEngine, setSearchEngine] = useState<SearchEngines>("postgres");
@@ -24,7 +24,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       if (!input) return setSearchResults(undefined);
-      const res = await fetch(`/api/search?q=${input}`);
+      const res = await fetch(`/api/search/${searchEngine}?q=${input}`);
       const data = (await res.json()) as {
         results: string[];
         duration: number;
@@ -33,7 +33,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, [input]);
+  }, [input, searchEngine]);
 
   return (
     <main className="h-screen w-screen grainy">
@@ -84,29 +84,54 @@ export default function Home() {
             </CommandList>
           </Command>
         </div>
-        <div className="text-zinc-600 text-lg max-w-prose text-center">
+        <div className="mt-8 text-zinc-600 text-lg max-w-prose text-center">
           {" "}
           Select your search engine to see the typeahead performance.{" "}
         </div>
         <div className="flex items-center gap-12">
-          <button className="flex flex-col items-center text-zinc-600">
-            <div className="w-12 h-12 relative">
-              <Image src="/postgres.svg" alt="Button 1" layout="fill" />
+          <button
+            className={`flex flex-col items-center text-zinc-600" ${
+              searchEngine === "postgres" ? "bg-gray-200 text-gray-700" : null
+            }`}
+            onClick={() => setSearchEngine("postgres")}
+          >
+            <div className="w-20 h-20 relative">
+              <Image
+                src="/postgres.svg"
+                alt="postgres"
+                width={200}
+                height={200}
+              />
             </div>
             postgres
           </button>
-          <button className="flex flex-col items-center text-zinc-600">
-            <div className="w-12 h-12 relative">
-              <Image src="/redis.svg" alt="redis" layout="fill" />
+          <button
+            className={`flex flex-col items-center text-zinc-600" ${
+              searchEngine === "redis" ? "bg-gray-200 text-gray-700" : null
+            }`}
+            onClick={() => setSearchEngine("redis")}
+          >
+            <div className="w-20 h-20 relative">
+              <Image src="/redis.svg" alt="redis" width={200} height={200} />
             </div>
             Redis
           </button>
-          <button className="flex flex-col items-center text-zinc-600">
-            <div className="w-12 h-12 relative">
-              <Image src="/elastic.svg" alt="redis" layout="fill" />
+          {/* <button
+            className={`flex flex-col items-center text-zinc-600" ${
+              searchEngine === "elastic" ? "bg-gray-200 text-gray-700" : null
+            }`}
+            onClick={() => setSearchEngine("elastic")}
+          >
+            <div className="w-20 h-20 relative">
+              <Image
+                src="/elastic.svg"
+                alt="elastic"
+                width={200}
+                height={200}
+              />
             </div>
             Elasticsearch
-          </button>
+          </button> */}
         </div>
       </div>
     </main>
