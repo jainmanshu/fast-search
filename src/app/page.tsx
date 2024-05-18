@@ -116,7 +116,7 @@ export default function Home() {
             </div>
             Redis
           </button>
-          {/* <button
+          <button
             className={`flex flex-col items-center text-zinc-600" ${
               searchEngine === "elastic" ? "bg-gray-200 text-gray-700" : null
             }`}
@@ -131,7 +131,7 @@ export default function Home() {
               />
             </div>
             Elasticsearch
-          </button> */}
+          </button>
         </div>
       </div>
     </main>
