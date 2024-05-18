@@ -5,6 +5,8 @@ interface Document {
   name: string;
 }
 
+const queryValidator = /^[a-zA-Z() ]{1,50}$/;
+
 export async function GET(request: NextRequest) {
   try {
     // --------------------------
@@ -13,9 +15,10 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const q = searchParams.get("q");
 
-    if (!q || typeof q !== "string") {
+    if (!q || typeof q !== "string" || !queryValidator.test(q)) {
       return NextResponse.json(
         {
+          results: [],
           message: "Invalid search query",
         },
         {

@@ -8,6 +8,8 @@ export const runtime = "edge";
 
 const app = new Hono().basePath("/api/search");
 
+const queryValidator = /^[a-zA-Z() ]{1,50}$/;
+
 type EnvConfig = {
   UPSTASH_REDIS_REST_TOKEN: string;
   UPSTASH_REDIS_REST_URL: string;
@@ -21,16 +23,26 @@ app.get("/postgres", async (c) => {
     const client = await db.connect();
 
     const query = c.req.query("q")?.toUpperCase();
-    if (!query) {
-      return c.json({ message: "Invalid search query" }, { status: 400 });
+
+    if (!query || !queryValidator.test(query)) {
+      return c.json(
+        { results: [], message: "Invalid search query" },
+        { status: 400 }
+      );
     }
 
     const { rows: res } = await client.sql`
-      SELECT name
-      FROM countries
-      WHERE name ILIKE ${query} || '%'
-      ORDER BY ts_rank_cd(to_tsvector('simple', name), to_tsquery('simple', ${query})) DESC
-      LIMIT 5
+    SELECT name
+    FROM countries
+    WHERE to_tsvector('simple', name) @@ websearch_to_tsquery('simple', ${query})
+    OR name ILIKE ${query} || '%'
+    ORDER BY 
+    CASE 
+    WHEN name ILIKE ${query} || '%' THEN 1
+    ELSE 2
+    END, 
+    ts_rank_cd(to_tsvector('simple', name), websearch_to_tsquery('simple', ${query})) DESC
+    LIMIT 5;
       `;
 
     // --------------------------
@@ -65,8 +77,11 @@ app.get("/redis", async (c) => {
 
     const query = c.req.query("q")?.toUpperCase();
 
-    if (!query) {
-      return c.json({ message: "Invalid search query" }, { status: 400 });
+    if (!query || !queryValidator.test(query)) {
+      return c.json(
+        { results: [], message: "Invalid search query" },
+        { status: 400 }
+      );
     }
 
     const res = [];
