@@ -45,9 +45,6 @@ export async function GET(request: NextRequest) {
       },
       size: 5,
     });
-
-    console.log(result.hits.hits);
-
     // --------------------------
     const end = performance.now();
     // ---------------------------
