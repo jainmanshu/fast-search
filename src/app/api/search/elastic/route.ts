@@ -50,18 +50,22 @@ export async function GET(request: NextRequest) {
     // ---------------------------
 
     const results = body.hits.hits.map((hit: any) => hit._source.name);
-    return NextResponse.json({
-      results,
-      duration: end - start,
-      status: 200,
-    });
+    return NextResponse.json(
+      {
+        results,
+        duration: end - start,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
-    return NextResponse.json({
-      results: [],
-      duration: 0,
-      message: "Something went wrong.",
-      status: 500,
-    });
+    return NextResponse.json(
+      {
+        results: [],
+        duration: 0,
+        message: "Something went wrong.",
+      },
+      { status: 500 }
+    );
   }
 }
