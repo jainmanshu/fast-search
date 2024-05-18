@@ -1,6 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Client } from "@elastic/elasticsearch";
 
+interface Document {
+  name: string;
+}
+
 export async function GET(request: NextRequest) {
   try {
     // --------------------------
@@ -30,29 +34,27 @@ export async function GET(request: NextRequest) {
         rejectUnauthorized: false,
       },
     });
-    const { body } = await client.search(
-      {
-        index: "countries",
-        query: {
-          match: {
-            name: {
-              query: q,
-            },
+    const result = await client.search<Document>({
+      index: "countries",
+      query: {
+        match: {
+          name: {
+            query: q,
           },
         },
-        size: 5,
       },
-      { meta: true }
-    );
+      size: 5,
+    });
+
+    console.log(result.hits.hits);
 
     // --------------------------
     const end = performance.now();
     // ---------------------------
 
-    const results = body.hits.hits.map((hit: any) => hit._source.name);
     return NextResponse.json(
       {
-        results,
+        results: result.hits.hits.map((hit) => hit?._source?.name),
         duration: end - start,
       },
       { status: 200 }
