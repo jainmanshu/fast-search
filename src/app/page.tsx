@@ -8,6 +8,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -21,6 +22,7 @@ export default function Home() {
     results: string[];
     duration: number;
   }>();
+  const { toast } = useToast();
 
   const handleInput = useDebouncedCallback((value) => {
     setInput(value);
@@ -28,13 +30,25 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!input) return setSearchResults(undefined);
-      const res = await fetch(`/api/search/${searchEngine}?q=${input}`);
-      const data = (await res.json()) as {
-        results: string[];
-        duration: number;
-      };
-      setSearchResults(data);
+      try {
+        if (!input) return setSearchResults(undefined);
+        const res = await fetch(`/api/search/${searchEngine}?q=${input}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch data: " + res.status);
+        }
+        const data = (await res.json()) as {
+          results: string[];
+          duration: number;
+        };
+        setSearchResults(data);
+      } catch (error) {
+        console.log(error);
+        toast({
+          variant: "destructive",
+          title: "Invalid Query!!!",
+          description: "There was a problem with your query. Please try again!",
+        });
+      }
     };
 
     fetchData();
