@@ -44,6 +44,7 @@ export default function Home() {
       } catch (error) {
         console.log(error);
         toast({
+          duration: 2000,
           variant: "destructive",
           title: "Invalid Query!!!",
           description: "There was a problem with your query. Please try again!",
@@ -56,16 +57,19 @@ export default function Home() {
 
   return (
     <main className="h-screen w-screen grainy">
-      <div className="flex flex-col gap-6 items-center pt-32 duration-500 animate-in animate fade-in-5 slide-in-from-bottom-2.5">
+      <div className="flex flex-col gap-4 items-center pt-32 duration-500 animate-in animate fade-in-5 slide-in-from-bottom-2.5">
         <h1 className="lg:text-5xl md:text-lg sm:text-xs tracking-tight font-semibold">
           ⚡ Lightning Fast Search ⚡
         </h1>
         <h4 className="text-zinc-600 lg:text-xl md:text-lg sm:text-base tracking-tight">
           High Performance Search Typeahead
         </h4>
-        <p className="text-zinc-600 lg:text-lg md:text-base sm:text-lg max-w-prose text-center">
+        <p className="text-zinc-600 lg:text-lg md:text-base sm:text-sm max-w-prose text-center">
           Built with Hono, Next, Postgres, Redis and Elastic.
-          {/* <br /> Type a query below and get your results in miliseconds. */}
+          <br />
+          <span className="text-base">
+            Search a country name and get your results in miliseconds.
+          </span>
         </p>
         <div className="max-w-md w-full">
           <Command>
