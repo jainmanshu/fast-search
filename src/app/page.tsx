@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 type SearchEngines = "postgres" | "redis" | "elastic";
 
@@ -63,10 +64,10 @@ export default function Home() {
         <h1 className="lg:text-5xl md:text-lg sm:text-xs tracking-tight font-semibold">
           ⚡ Lightning Fast Search ⚡
         </h1>
-        <h4 className="text-zinc-600 lg:text-xl md:text-lg sm:text-base tracking-tight">
+        <h4 className="text-zinc-700 lg:text-xl md:text-lg sm:text-base tracking-tight">
           High Performance Search Typeahead
         </h4>
-        <p className="text-zinc-600 lg:text-lg md:text-base sm:text-sm max-w-prose text-center">
+        <p className="text-zinc-700 lg:text-lg md:text-base sm:text-sm max-w-prose text-center">
           Built with Hono, Next, Postgres, Redis and Elastic.
           <br />
           <span className="text-base">
@@ -108,55 +109,44 @@ export default function Home() {
             </CommandList>
           </Command>
         </div>
-        <div className="mt-4 text-zinc-600 lg:text-lg md:text-base sm:text-sm max-w-prose text-center">
+        <div className="mt-4 text-zinc-700 lg:text-lg md:text-base sm:text-sm max-w-prose text-center">
           Select your search engine to see the typeahead performance.
         </div>
-        <div className="flex items-center gap-12">
-          <button
-            className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "postgres" ? "bg-stone-300 text-gray-700" : null
-            }`}
-            onClick={() => setSearchEngine("postgres")}
-          >
-            <div className="w-16 h-16 relative">
-              <Image
-                src="/postgres.svg"
-                alt="postgres"
-                width={200}
-                height={200}
-              />
-            </div>
-            postgres
-          </button>
-          <button
-            className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "redis" ? "bg-stone-300 text-gray-700" : null
-            }`}
-            onClick={() => setSearchEngine("redis")}
-          >
-            <div className="w-16 h-16 relative">
-              <Image src="/redis.svg" alt="redis" width={200} height={200} />
-            </div>
-            Redis
-          </button>
-          <button
-            className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "elastic" ? "bg-stone-300 text-gray-700" : null
-            }`}
-            onClick={() => setSearchEngine("elastic")}
-          >
-            <div className="w-16 h-16 relative">
-              <Image
-                src="/elastic.svg"
-                alt="elastic"
-                width={200}
-                height={200}
-              />
-            </div>
-            Elasticsearch
-          </button>
-        </div>
         <div className="m-8">
+          <ToggleGroup
+            type="single"
+            size="lg"
+            onValueChange={(value: SearchEngines) =>
+              value && setSearchEngine(value)
+            }
+          >
+            <ToggleGroupItem
+              value="postgres"
+              aria-label="Toggle postgres"
+              className="flex flex-col h-15 w-15 hover:bg-stone-300 data-[state=on]:bg-stone-300"
+            >
+              <Image src="/postgres.svg" alt="redis" width={75} height={75} />
+              <p className="text-zinc-700">Postgres</p>
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="redis"
+              aria-label="Toggle redis"
+              className="flex flex-col h-15 w-15 hover:bg-stone-300 data-[state=on]:bg-stone-300"
+            >
+              <Image src="/redis.svg" alt="redis" width={75} height={75} />
+              <p className="text-zinc-700">Redis</p>
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="elastic"
+              aria-label="Toggle elastic"
+              className="flex flex-col h-15 w-15 hover:bg-stone-300 data-[state=on]:bg-stone-300"
+            >
+              <Image src="/elastic.svg" alt="elastic" width={75} height={75} />
+              <p className="text-zinc-700">Elastic</p>
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+        <div className="m-4">
           <Link
             href="https://github.com/jainmanshu/fast-search"
             target="_blank"
@@ -164,7 +154,7 @@ export default function Home() {
             className={buttonVariants({
               variant: "ghost",
               size: "lg",
-              className: "text-zinc-600 hover:bg-stone-300",
+              className: "text-zinc-700 hover:bg-stone-300",
             })}
           >
             Star on GitHub ⭐

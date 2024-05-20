@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Recursive } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const recursive = Recursive({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Lightning Fast Typeahead",
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={recursive.className}>
         <main>{children}</main>
         <Toaster />
       </body>
