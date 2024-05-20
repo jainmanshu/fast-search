@@ -26,7 +26,7 @@ export default function Home() {
 
   const handleInput = useDebouncedCallback((value) => {
     setInput(value);
-  }, 300);
+  }, 200);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,12 +57,16 @@ export default function Home() {
   return (
     <main className="h-screen w-screen grainy">
       <div className="flex flex-col gap-6 items-center pt-32 duration-500 animate-in animate fade-in-5 slide-in-from-bottom-2.5">
-        <h1 className="text-5xl tracking-tight font-bold">SpeedSearch ⚡</h1>
-        <p className="text-zinc-600 text-lg max-w-prose text-center">
-          A high-performance API built with Hono, Next.js and Cloudflare. <br />{" "}
-          Type a query below and get your results in miliseconds.
+        <h1 className="lg:text-5xl md:text-lg sm:text-xs tracking-tight font-semibold">
+          ⚡ Lightning Fast Search ⚡
+        </h1>
+        <h4 className="text-zinc-600 lg:text-xl md:text-lg sm:text-base tracking-tight">
+          High Performance Search Typeahead
+        </h4>
+        <p className="text-zinc-600 lg:text-lg md:text-base sm:text-lg max-w-prose text-center">
+          Built with Hono, Next, Postgres, Redis and Elastic.
+          {/* <br /> Type a query below and get your results in miliseconds. */}
         </p>
-
         <div className="max-w-md w-full">
           <Command>
             <CommandInput
@@ -98,18 +102,17 @@ export default function Home() {
             </CommandList>
           </Command>
         </div>
-        <div className="mt-8 text-zinc-600 text-lg max-w-prose text-center">
-          {" "}
-          Select your search engine to see the typeahead performance.{" "}
+        <div className="mt-4 text-zinc-600 lg:text-lg md:text-base sm:text-sm max-w-prose text-center">
+          Select your search engine to see the typeahead performance.
         </div>
         <div className="flex items-center gap-12">
           <button
             className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "postgres" ? "bg-gray-200 text-gray-700" : null
+              searchEngine === "postgres" ? "bg-gray-300 text-gray-700" : null
             }`}
             onClick={() => setSearchEngine("postgres")}
           >
-            <div className="w-20 h-20 relative">
+            <div className="w-16 h-16 relative">
               <Image
                 src="/postgres.svg"
                 alt="postgres"
@@ -121,22 +124,22 @@ export default function Home() {
           </button>
           <button
             className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "redis" ? "bg-gray-200 text-gray-700" : null
+              searchEngine === "redis" ? "bg-gray-300 text-gray-700" : null
             }`}
             onClick={() => setSearchEngine("redis")}
           >
-            <div className="w-20 h-20 relative">
+            <div className="w-16 h-16 relative">
               <Image src="/redis.svg" alt="redis" width={200} height={200} />
             </div>
             Redis
           </button>
           <button
             className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "elastic" ? "bg-gray-200 text-gray-700" : null
+              searchEngine === "elastic" ? "bg-gray-300 text-gray-700" : null
             }`}
             onClick={() => setSearchEngine("elastic")}
           >
-            <div className="w-20 h-20 relative">
+            <div className="w-16 h-16 relative">
               <Image
                 src="/elastic.svg"
                 alt="elastic"

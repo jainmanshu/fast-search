@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "A fast API Search Typeahead",
+  title: "Lightning Fast Typeahead",
   description: "For Demo purposes only.",
 };
 
