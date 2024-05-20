@@ -12,6 +12,8 @@ import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 type SearchEngines = "postgres" | "redis" | "elastic";
 
@@ -112,7 +114,7 @@ export default function Home() {
         <div className="flex items-center gap-12">
           <button
             className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "postgres" ? "bg-gray-300 text-gray-700" : null
+              searchEngine === "postgres" ? "bg-stone-300 text-gray-700" : null
             }`}
             onClick={() => setSearchEngine("postgres")}
           >
@@ -128,7 +130,7 @@ export default function Home() {
           </button>
           <button
             className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "redis" ? "bg-gray-300 text-gray-700" : null
+              searchEngine === "redis" ? "bg-stone-300 text-gray-700" : null
             }`}
             onClick={() => setSearchEngine("redis")}
           >
@@ -139,7 +141,7 @@ export default function Home() {
           </button>
           <button
             className={`flex flex-col items-center text-zinc-600" ${
-              searchEngine === "elastic" ? "bg-gray-300 text-gray-700" : null
+              searchEngine === "elastic" ? "bg-stone-300 text-gray-700" : null
             }`}
             onClick={() => setSearchEngine("elastic")}
           >
@@ -153,6 +155,20 @@ export default function Home() {
             </div>
             Elasticsearch
           </button>
+        </div>
+        <div className="m-8">
+          <Link
+            href="https://github.com/jainmanshu/fast-search"
+            target="_blank"
+            referrerPolicy="no-referrer"
+            className={buttonVariants({
+              variant: "ghost",
+              size: "lg",
+              className: "text-zinc-600 hover:bg-stone-300",
+            })}
+          >
+            Star on GitHub ⭐
+          </Link>
         </div>
       </div>
     </main>
