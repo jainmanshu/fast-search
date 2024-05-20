@@ -116,6 +116,7 @@ export default function Home() {
           <ToggleGroup
             type="single"
             size="lg"
+            defaultValue="postgres"
             onValueChange={(value: SearchEngines) =>
               value && setSearchEngine(value)
             }

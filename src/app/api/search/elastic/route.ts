@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     const start = performance.now();
     // ---------------------------
     const searchParams = request.nextUrl.searchParams;
-    const q = searchParams.get("q");
+    const q = searchParams.get("q")?.toUpperCase();
 
     if (!q || typeof q !== "string" || !queryValidator.test(q)) {
       return NextResponse.json(
@@ -27,16 +27,14 @@ export async function GET(request: NextRequest) {
       );
     }
     const client = new Client({
-      node: process.env.ELASTIC_URL || "",
-      auth: {
-        username: process.env.ELASTIC_USER || "",
-        password: process.env.ELASTIC_PASSWORD || "",
+      cloud: {
+        id: process.env.ESS_CLOUD_ID || "",
       },
-      tls: {
-        ca: process.env.ELASTIC_CA,
-        rejectUnauthorized: false,
+      auth: {
+        apiKey: process.env.ESS_API_KEY || "",
       },
     });
+
     const result = await client.search<Document>({
       index: "countries",
       query: {
