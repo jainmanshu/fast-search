@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Recursive } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const recursive = Recursive({ subsets: ["latin"] });
 
@@ -21,6 +21,7 @@ export default function RootLayout({
       <body className={recursive.className}>
         <main>{children}</main>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
