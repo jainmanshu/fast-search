@@ -59,7 +59,7 @@ export default function Home() {
   }, [input, searchEngine]);
 
   return (
-    <main className="h-screen w-screen grainy">
+    <main className="min-h-screen w-screen grainy">
       <div className="flex flex-col gap-4 items-center pt-12 duration-500 animate-in animate fade-in-5 slide-in-from-bottom-2.5">
         <h1 className="lg:text-5xl md:text-2xl sm:text-sm tracking-tight font-semibold">
           ⚡ Lightning Fast Search ⚡
