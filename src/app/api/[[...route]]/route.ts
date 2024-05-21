@@ -105,7 +105,7 @@ app.get("/redis", async (c) => {
     // ---------------------------
 
     return c.json({
-      results: res,
+      results: res.slice(0, 5), // show top - 5
       duration: end - start,
     });
   } catch (error) {
