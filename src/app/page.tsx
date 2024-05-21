@@ -60,8 +60,8 @@ export default function Home() {
 
   return (
     <main className="h-screen w-screen grainy">
-      <div className="flex flex-col gap-4 items-center pt-32 duration-500 animate-in animate fade-in-5 slide-in-from-bottom-2.5">
-        <h1 className="lg:text-5xl md:text-lg sm:text-xs tracking-tight font-semibold">
+      <div className="flex flex-col gap-4 items-center pt-12 duration-500 animate-in animate fade-in-5 slide-in-from-bottom-2.5">
+        <h1 className="lg:text-5xl md:text-2xl sm:text-sm tracking-tight font-semibold">
           ⚡ Lightning Fast Search ⚡
         </h1>
         <h4 className="text-zinc-700 lg:text-xl md:text-lg sm:text-base tracking-tight">
