@@ -1,6 +1,6 @@
 # Fast Search
 
-A fast search typeahead for demo purposes.
+A fast search typeahead built
 
 ## Tech Used
 
