@@ -1,5 +1,6 @@
 "use client";
 
+import { buttonVariants } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -8,13 +9,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 type SearchEngines = "postgres" | "redis" | "elastic";
 
@@ -74,7 +74,7 @@ export default function Home() {
             Search a country name and get your results in miliseconds.
           </span>
         </p>
-        <div className="max-w-md w-full">
+        <div className="max-w-md w-5/6">
           <Command>
             <CommandInput
               onValueChange={handleInput}
@@ -147,14 +147,24 @@ export default function Home() {
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
-        <div className="m-4">
+        <div className="m-4 flex flex-row gap-4">
+          <Link
+            href="https://medium.com/@jainmanshu/building-efficient-search-solutions-redis-postgresql-and-elasticsearch-202890512387"
+            target="_blank"
+            referrerPolicy="no-referrer"
+            className={buttonVariants({
+              variant: "secondary",
+              className: "text-zinc-700 hover:bg-stone-300",
+            })}
+          >
+            Read it on Medium 📚
+          </Link>
           <Link
             href="https://github.com/jainmanshu/fast-search"
             target="_blank"
             referrerPolicy="no-referrer"
             className={buttonVariants({
-              variant: "ghost",
-              size: "lg",
+              variant: "secondary",
               className: "text-zinc-700 hover:bg-stone-300",
             })}
           >
