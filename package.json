@@ -22,7 +22,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
-    "hono": "^4.3.6",
+    "hono": "^4.5.8",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
